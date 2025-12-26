@@ -22,6 +22,8 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
     const [loading, setLoading] = useState(false);
 
     // Load language preference from NeonDB (for both authenticated users and guests)
+    // DISABLED: API endpoints not implemented yet - using localStorage only
+    /*
     useEffect(() => {
         const loadLanguageFromDB = async () => {
             setLoading(true);
@@ -60,6 +62,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
 
         loadLanguageFromDB();
     }, [isAuthenticated]);
+    */
 
     const setLanguage = async (lang: Language) => {
         setLanguageState(lang);
@@ -70,6 +73,8 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
         document.documentElement.lang = lang;
 
         // Save to NeonDB (for both authenticated users and guests)
+        // DISABLED: API endpoints not implemented yet - using localStorage only
+        /*
         try {
             let endpoint = '/api/user/language';
             const headers: HeadersInit = {
@@ -95,6 +100,7 @@ export const LanguageProvider: React.FC<{ children: ReactNode }> = ({ children }
             console.error('Failed to save language to DB:', error);
             // Continue anyway - localStorage is already updated
         }
+        */
     };
 
     // Translation function
