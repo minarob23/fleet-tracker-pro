@@ -1,0 +1,253 @@
+import { motion } from 'framer-motion';
+import { Truck as TruckType } from '@/types/truck';
+import { Truck, Phone, MapPin, Gauge, Hash, MessageCircle, CheckCircle, Clock, Share2, Send, Navigation } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import TruckActions from './TruckActions';
+import { useAuth } from '@/contexts/AuthContext';
+import { useLanguage } from '@/contexts/LanguageContext';
+import { getTrackingUrl, getTrackingMessage, openContactUrl, getPhoneCallUrl } from '@/utils/contactUtils';
+
+interface TruckListProps {
+  trucks: TruckType[];
+  onSelectTruck: (truck: TruckType) => void;
+  onMarkArrived?: (truck: TruckType) => void;
+  onSendWhatsApp: (truck: TruckType) => void;
+  onUpdateTruck?: (id: string, data: Partial<TruckType>) => Promise<void>;
+  onDeleteTruck?: (id: string) => Promise<void>;
+}
+
+const TruckList = ({
+  trucks,
+  onSelectTruck,
+  onMarkArrived,
+  onSendWhatsApp,
+  onUpdateTruck,
+  onDeleteTruck,
+}: TruckListProps) => {
+  const { user } = useAuth();
+  const { language } = useLanguage();
+
+  const statusConfig: Record<string, { label: string; className: string }> = {
+    waiting: {
+      label: language === 'ar' ? '⏸️ في الانتظار' : '⏸️ En attente',
+      className: 'bg-amber-500/10 text-amber-700 border-amber-500/20'
+    },
+    en_route: {
+      label: language === 'ar' ? '🚚 في الطريق' : '🚚 En route',
+      className: 'bg-sky-500/10 text-sky-700 border-sky-500/20'
+    },
+    in_transit: {
+      label: language === 'ar' ? '🚚 في الطريق' : '🚚 En transit',
+      className: 'bg-sky-500/10 text-sky-700 border-sky-500/20'
+    },
+    arrived: {
+      label: language === 'ar' ? '✅ وصلت' : '✅ Arrivé',
+      className: 'bg-green-500/10 text-green-700 border-green-500/20'
+    },
+    depot: {
+      label: language === 'ar' ? '🏪 المخزن' : '🏪 Dépôt',
+      className: 'bg-purple-500/10 text-purple-700 border-purple-500/20'
+    },
+    discharged: {
+      label: language === 'ar' ? '📦 منزلة' : '📦 Déchargé',
+      className: 'bg-gray-500/10 text-gray-700 border-gray-500/20'
+    },
+  };
+
+  // Fallback for unknown statuses
+  const getStatusConfig = (status: string) => {
+    return statusConfig[status] || {
+      label: status,
+      className: 'bg-gray-500/10 text-gray-700 border-gray-500/20'
+    };
+  };
+
+  return (
+    <div className="space-y-2">
+      {trucks.map((truck, index) => (
+        <motion.div
+          key={truck.id}
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: index * 0.05 }}
+          onClick={() => onSelectTruck(truck)}
+          className="glass-card p-4 cursor-pointer hover:shadow-lg transition-all duration-200 border-l-4"
+          style={{
+            borderLeftColor:
+              truck.status === 'arrived' ? '#10b981' :
+                truck.status === 'en_route' ? '#0ea5e9' :
+                  truck.status === 'depot' ? '#a855f7' : '#f59e0b',
+          }}
+        >
+          <div className="flex items-start justify-between mb-3">
+            <div className="flex items-center gap-2">
+              {truck.arrivalNumber && (
+                <div className="w-8 h-8 rounded-full bg-success/20 flex items-center justify-center">
+                  <span className="text-sm font-bold text-success">#{truck.arrivalNumber}</span>
+                </div>
+              )}
+              <div>
+                <p className="font-bold">{truck.plateNumber}</p>
+                <p className="text-sm text-muted-foreground">{truck.driverName}</p>
+              </div>
+            </div>
+            <Badge variant="outline" className={`${getStatusConfig(truck.status).className} whitespace-nowrap`}>
+              {getStatusConfig(truck.status).label}
+            </Badge>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 text-sm text-muted-foreground mb-3">
+            <div className="flex items-center gap-1">
+              <Hash className="w-4 h-4" />
+              <span className="font-mono text-xs">{truck.bonLivraison || truck.cargoType || '-'}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              <Gauge className="w-4 h-4" />
+              <span>{truck.speed} {language === 'ar' ? 'كم/س' : 'km/h'}</span>
+            </div>
+            {truck.destination && (
+              <div className="flex items-center gap-1 col-span-2">
+                <MapPin className="w-4 h-4" />
+                <span className="text-muted-foreground">{truck.destination}</span>
+              </div>
+            )}
+            <div className="flex items-center gap-1 col-span-2">
+              <Phone className="w-4 h-4" />
+              <span className="text-muted-foreground">{truck.driverPhone}</span>
+            </div>
+          </div>
+
+          {/* Timestamp - Enhanced Design */}
+          <div className="mt-3 pt-3 border-t border-border/50">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="p-1.5 bg-primary/10 rounded-md">
+                  <Clock className="w-3.5 h-3.5 text-primary" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-xs text-muted-foreground">{language === 'ar' ? 'آخر تحديث' : 'Dernière mise à jour'}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-bold text-foreground">
+                      {new Date(truck.lastUpdate).toLocaleTimeString('ar-SA', {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {new Date(truck.lastUpdate).toLocaleDateString('ar-SA', {
+                        day: 'numeric',
+                        month: 'short'
+                      })}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Actions */}
+          <div className="flex gap-2 mt-3 pt-3 border-t border-border/50 flex-wrap">
+            {/* WhatsApp Tracking Buttons - Show when WhatsApp is preferred contact */}
+            {truck.preferredContact === 'whatsapp' && truck.driverPhone ? (
+              <>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs flex flex-row items-center justify-center gap-1 whitespace-nowrap flex-1 min-w-[100px]"
+                  onClick={async (e) => {
+                    e.stopPropagation();
+                    try {
+                      const response = await fetch(`/api/whatsapp-tracking/create-link/${truck.id}`, {
+                        method: 'POST'
+                      });
+                      const data = await response.json();
+
+                      if (data.success) {
+                        const message = encodeURIComponent(
+                          `مرحباً ${truck.driverName}! 🚛\n\n` +
+                          `شاحنتك: ${truck.plateNumber}\n` +
+                          `الوجهة: ${truck.destination || 'غير محددة'}\n\n` +
+                          `📍 رابط التتبع:\n${data.trackingUrl}\n\n` +
+                          `افتح الرابط وابدأ التتبع`
+                        );
+                        window.open(`https://wa.me/${truck.driverPhone.replace(/[^0-9]/g, '')}?text=${message}`, '_blank');
+                      }
+                    } catch (error) {
+                      console.error('Error creating tracking link:', error);
+                    }
+                  }}
+                >
+                  <Navigation className="w-3 h-3 shrink-0" />
+                  <span>{language === 'ar' ? 'رابط تتبع' : 'Lien'}</span>
+                </Button>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="text-xs flex flex-row items-center justify-center gap-1 whitespace-nowrap flex-1 min-w-[100px]"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onSendWhatsApp(truck);
+                  }}
+                >
+                  <MessageCircle className="w-3 h-3 shrink-0" />
+                  <span>{language === 'ar' ? 'رسالة' : 'Message'}</span>
+                </Button>
+              </>
+            ) : truck.driverPhone ? (
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-xs flex flex-row items-center justify-center gap-1 whitespace-nowrap"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onSendWhatsApp(truck);
+                }}
+              >
+                <MessageCircle className="w-3 h-3 shrink-0" />
+                <span>{language === 'ar' ? 'واتساب' : 'WhatsApp'}</span>
+              </Button>
+            ) : null}
+
+            {(truck.status === 'en_route' || truck.status === 'in_transit') && onMarkArrived && (
+              <Button
+                size="sm"
+                variant="default"
+                className="text-xs bg-success hover:bg-success/90 flex flex-row items-center justify-center gap-1 whitespace-nowrap"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onMarkArrived(truck);
+                }}
+              >
+                <CheckCircle className="w-3 h-3 shrink-0" />
+                <span>{language === 'ar' ? 'وصلت' : 'Arrivé'}</span>
+              </Button>
+            )}
+
+            {onUpdateTruck && onDeleteTruck && (
+              <div onClick={(e) => e.stopPropagation()}>
+                <TruckActions
+                  truck={truck}
+                  onUpdate={onUpdateTruck}
+                  onDelete={onDeleteTruck}
+                  canEdit={user?.role === 'admin'}
+                  canDelete={user?.role === 'admin'}
+                />
+              </div>
+            )}
+          </div>
+        </motion.div>
+      ))}
+
+      {trucks.length === 0 && (
+        <div className="text-center py-12 text-muted-foreground">
+          <Truck className="w-16 h-16 mx-auto mb-4 opacity-20" />
+          <p className="text-lg font-medium">لا توجد شاحنات</p>
+          <p className="text-sm">أضف شاحنة جديدة للبدء</p>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default TruckList;

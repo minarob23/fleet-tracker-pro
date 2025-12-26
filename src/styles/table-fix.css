@@ -1,0 +1,323 @@
+/* ========================================
+   PERFECT TABLE STYLING - FINAL SOLUTION
+   ======================================== */
+
+/* Complete reset of table styles */
+table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  border-spacing: 0 !important;
+  table-layout: auto !important;
+  direction: rtl !important;
+  margin: 0 !important;
+  position: relative !important;
+}
+
+/* Fix table wrapper to prevent shifting */
+.relative.w-full.overflow-auto,
+div[class*="overflow-auto"] {
+  width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* ========================================
+   HEADERS - STUNNING DESIGN
+   ======================================== */
+table thead {
+  position: relative !important;
+  z-index: 20 !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(14, 165, 233, 0.95) 100%) !important;
+  box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3) !important;
+  width: 100% !important;
+  display: table-header-group !important;
+}
+
+.dark table thead {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(14, 165, 233, 0.2) 100%) !important;
+}
+
+table thead th {
+  padding: 2rem 1.5rem !important;
+  font-size: 1.625rem !important;
+  font-weight: 900 !important;
+  color: white !important;
+  text-align: right !important;
+  border: none !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1.5px !important;
+  white-space: nowrap !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+  box-sizing: border-box !important;
+  margin: 0 !important;
+  direction: rtl !important;
+}
+
+/* Match first header cell padding with first body cell */
+table thead th:first-child {
+  padding-right: 1.5rem !important;
+}
+
+.dark table thead th {
+  color: rgb(16, 185, 129) !important;
+  text-shadow: 0 2px 8px rgba(16, 185, 129, 0.5) !important;
+}
+
+/* ========================================
+   ROWS - CARD DESIGN WITH SPACING
+   ======================================== */
+table tbody {
+  width: 100% !important;
+  display: table-row-group !important;
+}
+
+table tbody tr {
+  background: white !important;
+  margin-bottom: 1rem !important;
+  border-radius: 1rem !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1) !important;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border: 3px solid rgba(16, 185, 129, 0.15) !important;
+  position: relative !important;
+  overflow: hidden !important;
+  width: 100% !important;
+  display: table-row !important;
+}
+
+.dark table tbody tr {
+  background: rgba(255, 255, 255, 0.05) !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4) !important;
+  border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Add gradient accent on left */
+table tbody tr::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg, rgb(16, 185, 129) 0%, rgb(14, 165, 233) 100%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+table tbody tr:hover::before {
+  opacity: 1;
+}
+
+/* Spacing between rows */
+table tbody tr td {
+  border-top: 10px solid transparent !important;
+  border-bottom: 10px solid transparent !important;
+}
+
+/* Hover effect - DRAMATIC */
+table tbody tr:hover {
+  transform: translateY(-6px) translateX(-4px) scale(1.01) !important;
+  box-shadow: 0 20px 40px rgba(16, 185, 129, 0.25) !important;
+  border-color: rgb(16, 185, 129) !important;
+  z-index: 10 !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.03) 0%, rgba(14, 165, 233, 0.03) 100%) !important;
+}
+
+.dark table tbody tr:hover {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(14, 165, 233, 0.15) 100%) !important;
+}
+
+/* ========================================
+   CELLS - LARGE AND BEAUTIFUL
+   ======================================== */
+table tbody td {
+  padding: 2rem 1.5rem !important;
+  font-size: 1.5rem !important;
+  font-weight: 500 !important;
+  color: hsl(var(--foreground)) !important;
+  text-align: right !important;
+  vertical-align: middle !important;
+  border: none !important;
+  margin: 0 !important;
+  direction: rtl !important;
+}
+
+/* First cell - Plate Number - HERO STYLE */
+table tbody td:first-child {
+  font-weight: 900 !important;
+  font-size: 2rem !important;
+  background: linear-gradient(135deg, rgb(16, 185, 129) 0%, rgb(5, 150, 105) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  padding-right: 1.5rem !important;
+  position: relative !important;
+}
+
+/* Add icon before plate number */
+table tbody td:first-child::before {
+  content: '🚛';
+  position: absolute;
+  right: 0.5rem;
+  font-size: 1.5rem;
+  -webkit-text-fill-color: initial !important;
+}
+
+/* Last cell - Actions */
+table tbody td:last-child {
+  text-align: center !important;
+}
+
+/* ========================================
+   BADGES - MODERN PILL DESIGN
+   ======================================== */
+table td [class*="badge"],
+table td .inline-flex,
+table td [class*="Badge"] {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.75rem !important;
+  border: none !important;
+  border-radius: 3rem !important;
+  padding: 1rem 2rem !important;
+  font-size: 1.375rem !important;
+  font-weight: 800 !important;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  white-space: nowrap !important;
+  transition: all 0.3s ease !important;
+}
+
+table td [class*="badge"]:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25) !important;
+}
+
+/* ========================================
+   BUTTONS - PREMIUM DESIGN
+   ======================================== */
+table td button {
+  border: 3px solid rgb(16, 185, 129) !important;
+  border-radius: 1.25rem !important;
+  padding: 1.25rem 2.5rem !important;
+  font-size: 1.375rem !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(14, 165, 233, 0.1) 100%) !important;
+  color: rgb(16, 185, 129) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  min-width: 140px !important;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25) !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+table td button:hover {
+  background: linear-gradient(135deg, rgb(16, 185, 129) 0%, rgb(5, 150, 105) 100%) !important;
+  color: white !important;
+  transform: translateY(-4px) !important;
+  box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4) !important;
+  border-color: rgb(5, 150, 105) !important;
+}
+
+table td button svg {
+  width: 1.75rem !important;
+  height: 1.75rem !important;
+}
+
+/* ========================================
+   ALTERNATING ROWS - SUBTLE
+   ======================================== */
+table tbody tr:nth-child(even) {
+  background: rgba(16, 185, 129, 0.02) !important;
+}
+
+.dark table tbody tr:nth-child(even) {
+  background: rgba(16, 185, 129, 0.03) !important;
+}
+
+/* ========================================
+   ANIMATIONS - SMOOTH AND ELEGANT
+   ======================================== */
+@keyframes tableRowSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px) translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+table tbody tr {
+  animation: tableRowSlideIn 0.5s ease-out backwards !important;
+}
+
+table tbody tr:nth-child(1) {
+  animation-delay: 0.05s !important;
+}
+
+table tbody tr:nth-child(2) {
+  animation-delay: 0.1s !important;
+}
+
+table tbody tr:nth-child(3) {
+  animation-delay: 0.15s !important;
+}
+
+table tbody tr:nth-child(4) {
+  animation-delay: 0.2s !important;
+}
+
+table tbody tr:nth-child(5) {
+  animation-delay: 0.25s !important;
+}
+
+table tbody tr:nth-child(6) {
+  animation-delay: 0.3s !important;
+}
+
+table tbody tr:nth-child(7) {
+  animation-delay: 0.35s !important;
+}
+
+table tbody tr:nth-child(8) {
+  animation-delay: 0.4s !important;
+}
+
+/* Header animation */
+@keyframes headerSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+table thead {
+  animation: headerSlideDown 0.6s ease-out !important;
+}
+
+/* ========================================
+   RESPONSIVE - MOBILE OPTIMIZATION
+   ======================================== */
+@media (max-width: 768px) {
+  table thead th {
+    font-size: 1.25rem !important;
+    padding: 1.5rem 1rem !important;
+  }
+
+  table tbody td {
+    font-size: 1.25rem !important;
+    padding: 1.5rem 1rem !important;
+  }
+
+  table tbody td:first-child {
+    font-size: 1.5rem !important;
+  }
+}

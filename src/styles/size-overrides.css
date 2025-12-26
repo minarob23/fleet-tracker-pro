@@ -1,0 +1,362 @@
+/* Global size overrides for better visibility */
+
+/* Increase all text sizes */
+.text-xs {
+    font-size: 0.875rem !important;
+}
+
+.text-sm {
+    font-size: 1rem !important;
+}
+
+.text-base {
+    font-size: 1.125rem !important;
+}
+
+.text-lg {
+    font-size: 1.25rem !important;
+}
+
+.text-xl {
+    font-size: 1.5rem !important;
+}
+
+.text-2xl {
+    font-size: 1.875rem !important;
+}
+
+.text-3xl {
+    font-size: 2.25rem !important;
+}
+
+.text-4xl {
+    font-size: 3rem !important;
+}
+
+/* Increase button sizes */
+.btn-sm {
+    padding: 0.625rem 1.25rem !important;
+    font-size: 1rem !important;
+}
+
+.btn {
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1.125rem !important;
+}
+
+.btn-lg {
+    padding: 1rem 2rem !important;
+    font-size: 1.25rem !important;
+}
+
+/* Increase form elements */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select,
+textarea {
+    padding: 0.75rem 1rem !important;
+    font-size: 1.125rem !important;
+    min-height: 3rem !important;
+}
+
+/* Increase card padding */
+.glass-card {
+    padding: 1.5rem !important;
+}
+
+/* Increase badge sizes */
+.badge {
+    padding: 0.5rem 1rem !important;
+    font-size: 1rem !important;
+}
+
+/* Increase icon sizes in buttons */
+button svg,
+a svg {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+/* Increase spacing */
+.gap-2 {
+    gap: 0.75rem !important;
+}
+
+.gap-4 {
+    gap: 1.25rem !important;
+}
+
+.gap-6 {
+    gap: 1.75rem !important;
+}
+
+/* Increase border radius for better visibility */
+.rounded {
+    border-radius: 0.5rem !important;
+}
+
+.rounded-lg {
+    border-radius: 0.75rem !important;
+}
+
+.rounded-xl {
+    border-radius: 1rem !important;
+}
+
+/* Increase map controls */
+.mapboxgl-ctrl-group button {
+    width: 3.5rem !important;
+    height: 3.5rem !important;
+    font-size: 1.5rem !important;
+}
+
+/* Increase sidebar width */
+.sidebar {
+    width: 28rem !important;
+}
+
+/* Increase header height */
+header {
+    min-height: 5rem !important;
+}
+
+/* Increase stats cards */
+.stats-card {
+    padding: 1.5rem !important;
+}
+
+.stats-card .value {
+    font-size: 2.5rem !important;
+    font-weight: bold;
+}
+
+.stats-card .label {
+    font-size: 1.25rem !important;
+}
+
+/* ========================================
+   MODERN CARD-BASED TABLE DESIGN
+   ======================================== */
+
+/* Hide traditional table on mobile, show cards */
+@media (max-width: 768px) {
+    table thead {
+        display: none !important;
+    }
+
+    table tbody tr {
+        display: block !important;
+        margin-bottom: 1rem !important;
+        background: white !important;
+        border-radius: 1rem !important;
+        padding: 1rem !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    table tbody td {
+        display: block !important;
+        text-align: right !important;
+        border: none !important;
+        padding: 0.5rem 0 !important;
+    }
+
+    table tbody td:before {
+        content: attr(data-label);
+        font-weight: bold;
+        display: inline-block;
+        margin-left: 1rem;
+    }
+}
+
+/* Desktop table - Clean modern design */
+table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background: transparent !important;
+    margin: 0 !important;
+    direction: rtl !important;
+    table-layout: auto !important;
+}
+
+/* Table headers - Minimal clean design */
+table thead {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08) 0%, rgba(14, 165, 233, 0.08) 100%) !important;
+    border-bottom: 3px solid rgb(16, 185, 129) !important;
+    width: 100% !important;
+    display: table-header-group !important;
+}
+
+table thead tr {
+    width: 100% !important;
+    display: table-row !important;
+}
+
+table thead th {
+    padding: 1.5rem 1.25rem !important;
+    font-size: 1.25rem !important;
+    font-weight: 700 !important;
+    color: rgb(16, 185, 129) !important;
+    text-align: right !important;
+    border: none !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    direction: rtl !important;
+}
+
+/* Table rows - Card-like appearance */
+table tbody {
+    width: 100% !important;
+    display: table-row-group !important;
+}
+
+table tbody tr {
+    background: white !important;
+    margin-bottom: 0.75rem !important;
+    border-radius: 1rem !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    border: 2px solid transparent !important;
+    width: 100% !important;
+    display: table-row !important;
+}
+
+.dark table tbody tr {
+    background: rgba(255, 255, 255, 0.03) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Spacing between rows */
+table tbody tr {
+    display: table-row !important;
+}
+
+table tbody tr td {
+    border-top: 8px solid transparent !important;
+    border-bottom: 8px solid transparent !important;
+}
+
+/* Hover effect - Lift and glow */
+table tbody tr:hover {
+    transform: translateY(-4px) scale(1.01) !important;
+    box-shadow: 0 12px 24px rgba(16, 185, 129, 0.15) !important;
+    border-color: rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Table cells - Clean spacing */
+table tbody td {
+    padding: 1.25rem 1.25rem !important;
+    font-size: 1.125rem !important;
+    border: none !important;
+    background: transparent !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    direction: rtl !important;
+    text-align: right !important;
+}
+
+/* First cell - Plate number - Special highlight */
+table tbody td:first-child {
+    font-weight: 800 !important;
+    font-size: 1.375rem !important;
+    color: rgb(16, 185, 129) !important;
+    border-right: 4px solid rgb(16, 185, 129) !important;
+    border-radius: 1rem 0 0 1rem !important;
+}
+
+/* Last cell - Actions */
+table tbody td:last-child {
+    border-radius: 0 1rem 1rem 0 !important;
+}
+
+/* Badge styling - Pill design */
+table td [class*="badge"],
+table td .inline-flex {
+    border: none !important;
+    border-radius: 2rem !important;
+    padding: 0.625rem 1.5rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Button styling - Modern flat design */
+table td button {
+    border: 2px solid rgb(16, 185, 129) !important;
+    border-radius: 0.75rem !important;
+    padding: 0.75rem 1.5rem !important;
+    font-size: 1.125rem !important;
+    font-weight: 600 !important;
+    background: rgba(16, 185, 129, 0.05) !important;
+    color: rgb(16, 185, 129) !important;
+    transition: all 0.2s ease !important;
+}
+
+table td button:hover {
+    background: rgb(16, 185, 129) !important;
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3) !important;
+}
+
+/* Alternating subtle background */
+table tbody tr:nth-child(even) {
+    background: rgba(0, 0, 0, 0.01) !important;
+}
+
+.dark table tbody tr:nth-child(even) {
+    background: rgba(255, 255, 255, 0.01) !important;
+}
+
+/* Disable the ::before pseudo-element completely to fix alignment */
+table tbody tr::before {
+    content: none !important;
+    display: none !important;
+}
+
+table tbody tr:hover::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* Smooth entrance animation */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+table tbody tr {
+    animation: slideInUp 0.4s ease-out backwards !important;
+}
+
+table tbody tr:nth-child(1) {
+    animation-delay: 0.05s !important;
+}
+
+table tbody tr:nth-child(2) {
+    animation-delay: 0.1s !important;
+}
+
+table tbody tr:nth-child(3) {
+    animation-delay: 0.15s !important;
+}
+
+table tbody tr:nth-child(4) {
+    animation-delay: 0.2s !important;
+}
+
+table tbody tr:nth-child(5) {
+    animation-delay: 0.25s !important;
+}
