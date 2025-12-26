@@ -12,19 +12,24 @@ router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
 
+        console.log('🔐 Login attempt for:', email);
+
         if (!email || !password) {
+            console.log('❌ Missing email or password');
             return res.status(400).json({ error: 'Email and password are required' });
         }
 
         const result = await authenticateUser({ email, password });
 
         if (!result) {
+            console.log('❌ Authentication failed for:', email);
             return res.status(401).json({ error: 'Invalid email or password' });
         }
 
+        console.log('✅ Login successful for:', email, '| User ID:', result.user.id, '| Role:', result.user.role);
         res.json(result);
     } catch (error) {
-        console.error('Login error:', error);
+        console.error('❌ Login error:', error);
         res.status(500).json({ error: 'Login failed' });
     }
 });

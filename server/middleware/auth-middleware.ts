@@ -18,6 +18,7 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         const authHeader = req.headers.authorization;
 
         if (!authHeader || !authHeader.startsWith('Bearer ')) {
+            console.log('❌ No token provided');
             return res.status(401).json({ error: 'No token provided' });
         }
 
@@ -25,19 +26,22 @@ export const authenticate = async (req: Request, res: Response, next: NextFuncti
         const decoded = verifyToken(token);
 
         if (!decoded) {
+            console.log('❌ Invalid or expired token');
             return res.status(401).json({ error: 'Invalid or expired token' });
         }
 
         const user = await getUserById(decoded.userId);
 
         if (!user) {
+            console.log('❌ User not found for ID:', decoded.userId);
             return res.status(401).json({ error: 'User not found' });
         }
 
+        console.log('✅ Authenticated:', user.email, '| User ID:', user.id, '| Role:', user.role);
         req.user = user;
         next();
     } catch (error) {
-        console.error('Authentication error:', error);
+        console.error('❌ Authentication error:', error);
         res.status(500).json({ error: 'Authentication failed' });
     }
 };
