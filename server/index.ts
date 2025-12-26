@@ -32,6 +32,10 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+// Serve static files from the dist directory (Vite build output)
+const distPath = join(__dirname, '..', 'dist');
+app.use(express.static(distPath));
+
 // Initialize database and create users on startup
 initDatabase()
     .then(() => createInitialUsers())
@@ -419,6 +423,11 @@ app.delete('/api/geofences/:id', authenticate, async (req, res) => {
         console.error('Error deleting geofence:', error);
         res.status(500).json({ error: 'Failed to delete geofence' });
     }
+});
+
+// SPA fallback - serve index.html for all non-API routes
+app.get('*', (req, res) => {
+    res.sendFile(join(distPath, 'index.html'));
 });
 
 app.listen(PORT, () => {
