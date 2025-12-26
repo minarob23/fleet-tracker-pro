@@ -75,7 +75,7 @@ export const filterTrucksByPermissions = (trucks: any[], user: User): any[] => {
     // City staff can only see trucks destined to their city
     if (user.role === 'city_staff' && user.city) {
         return trucks.filter(truck =>
-            truck.destination && truck.destination.toLowerCase().includes(user.city.toLowerCase())
+            truck.destination && truck.destination.toLowerCase().includes(user.city!.toLowerCase())
         );
     }
 
