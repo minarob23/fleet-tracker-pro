@@ -100,7 +100,7 @@ const FilterableReportsTable = ({ trucks, onSelectTruck }: FilterableReportsTabl
         return {
             total: trucks.length,
             waiting: trucks.filter(t => t.status === 'waiting').length,
-            en_route: trucks.filter(t => t.status === 'en_route').length,
+            en_route: trucks.filter(t => t.status === 'en_route' || t.status === 'in_transit').length,
             arrived: trucks.filter(t => t.status === 'arrived').length,
             depot: trucks.filter(t => t.status === 'depot').length,
             discharged: trucks.filter(t => t.status === 'discharged').length,
