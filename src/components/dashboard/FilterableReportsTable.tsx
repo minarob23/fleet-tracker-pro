@@ -39,8 +39,9 @@ const FilterableReportsTable = ({ trucks, onSelectTruck }: FilterableReportsTabl
     }, [trucks]);
 
     // Status configuration
-    const statusConfig = {
+    const statusConfig: Record<string, { label: string; color: string; icon: string }> = {
         waiting: { label: 'في الانتظار', color: 'bg-amber-500/10 text-amber-700 border-amber-500/20', icon: '⏸️' },
+        in_transit: { label: 'في الطريق', color: 'bg-sky-500/10 text-sky-700 border-sky-500/20', icon: '🚚' },
         en_route: { label: 'في الطريق', color: 'bg-sky-500/10 text-sky-700 border-sky-500/20', icon: '🚚' },
         arrived: { label: 'وصلت', color: 'bg-green-500/10 text-green-700 border-green-500/20', icon: '✅' },
         depot: { label: 'المخزن', color: 'bg-purple-500/10 text-purple-700 border-purple-500/20', icon: '🏪' },
@@ -117,7 +118,7 @@ const FilterableReportsTable = ({ trucks, onSelectTruck }: FilterableReportsTabl
             'Destination': truck.destination || '-',
             'Delivery Note No.': truck.driverPhone || '-',
             'Arrival Date': truck.arrivalNumber ? new Date(truck.lastUpdate).toLocaleString('en-US') : '-',
-            'IN/OUT?': statusConfig[truck.status].label,
+            'IN/OUT?': (statusConfig[truck.status] || statusConfig.waiting).label,
             'Arrive?': truck.arrivalNumber ? 'Yes' : 'No'
         }));
 
@@ -428,8 +429,8 @@ const FilterableReportsTable = ({ trucks, onSelectTruck }: FilterableReportsTabl
 
                                     {/* IN/OUT? (Status) */}
                                     <TableCell>
-                                        <Badge variant="outline" className={statusConfig[truck.status].color}>
-                                            {statusConfig[truck.status].icon}
+                                        <Badge variant="outline" className={(statusConfig[truck.status] || statusConfig.waiting).color}>
+                                            {(statusConfig[truck.status] || statusConfig.waiting).icon}
                                         </Badge>
                                     </TableCell>
 
